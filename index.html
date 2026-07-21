@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JumpFirst Academy</title>
+    <meta
+      name="description"
+      content="JumpFirst Academy เป็นแพลตฟอร์มเรียนออนไลน์และระบบลงทะเบียนเรียนสำหรับนักเรียนที่ต้องการพัฒนาตนเอง"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="#home">
+          <span class="brand-mark">JF</span>
+          <span>JumpFirst Academy</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#courses">Courses</a>
+          <a href="#register">Register</a>
+          <a href="#member">Members</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="btn btn-secondary" data-open-modal="loginModal">Login</button>
+          <button class="btn btn-primary" data-open-modal="registerModal">Register</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">ระบบคอร์สเรียนที่ตอบโจทย์ทุกขั้นตอน</p>
+            <h1>เรียนรู้ได้อย่างง่ายดาย พร้อมระบบสมาชิกที่ครบครัน</h1>
+            <p>
+              JumpFirst Academy ออกแบบให้คุณลงทะเบียนเรียน จัดการตารางเรียน และติดตามสถานะคอร์สได้ในพื้นที่เดียว
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#register">ลงทะเบียนเรียน</a>
+              <button class="btn btn-outline" data-open-modal="loginModal">เข้าสู่ระบบ</button>
+            </div>
+            <ul class="hero-highlights">
+              <li>ระบบสมาชิกปลอดภัย</li>
+              <li>ลงทะเบียนเรียนง่าย</li>
+              <li>จัดการตารางเรียนได้เอง</li>
+            </ul>
+          </div>
+          <div class="hero-card" aria-label="Dashboard preview">
+            <div class="card-top">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="card-body">
+              <h3>Dashboard Overview</h3>
+              <div class="stats-grid">
+                <div>
+                  <strong>12</strong>
+                  <span>คอร์สที่เข้าร่วม</span>
+                </div>
+                <div>
+                  <strong>4</strong>
+                  <span>ตารางเรียนใหม่</span>
+                </div>
+                <div>
+                  <strong>99%</strong>
+                  <span>ความสำเร็จ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container section-grid">
+          <div>
+            <p class="eyebrow">About me</p>
+            <h2>สร้างประสบการณ์การเรียนรู้ที่ราบรื่นและสบายตา</h2>
+            <p>
+              เราออกแบบเว็บไซต์ด้วยความตั้งใจให้ทุกคนใช้งานง่าย ทั้งนักเรียน ผู้ปกครอง และทีมงานด้านการศึกษา
+              ที่สำคัญคือเน้นให้ทุกฟีเจอร์เข้าถึงได้ง่ายจากทุกอุปกรณ์
+            </p>
+          </div>
+          <div class="info-card">
+            <h3>สิ่งที่ผู้ใช้จะได้รับ</h3>
+            <ul>
+              <li>ระบบสมาชิกที่ใช้งานง่าย</li>
+              <li>การลงทะเบียนเรียนแบบไม่ซับซ้อน</li>
+              <li>ระบบติดต่อและคำถามที่รวดเร็ว</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt-section" id="courses">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">ข้อมูลคอร์สเรียน</p>
+            <h2>คอร์สที่น่าสนใจสำหรับการเติบโตของคุณ</h2>
+          </div>
+          <div class="card-grid">
+            <article class="feature-card">
+              <h3>Frontend Essentials</h3>
+              <p>เรียนรู้ HTML, CSS และ JavaScript สำหรับสร้างเว็บที่สวยงามและใช้งานง่าย</p>
+              <span>ระดับพื้นฐาน</span>
+            </article>
+            <article class="feature-card">
+              <h3>UX/UI Design</h3>
+              <p>ฝึกออกแบบหน้าตาเว็บให้สอดคล้องกับผู้ใช้งานและสร้างประสบการณ์ที่ดี</p>
+              <span>ระดับกลาง</span>
+            </article>
+            <article class="feature-card">
+              <h3>Career Growth</h3>
+              <p>เตรียมตัวสำหรับงานด้านเทคโนโลยีด้วยทักษะที่จำเป็นในยุคปัจจุบัน</p>
+              <span>ระดับเชิงลึก</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="register">
+        <div class="container section-grid">
+          <div>
+            <p class="eyebrow">ลงทะเบียนเรียน</p>
+            <h2>เริ่มต้นการเรียนรู้ด้วยขั้นตอนที่ชัดเจน</h2>
+            <p>เลือกคอร์สที่คุณสนใจ กรอกข้อมูลให้ครบ แล้วรอรับคำแนะนำจากทีมงาน</p>
+          </div>
+          <div class="register-panel">
+            <div class="step">
+              <span>1</span>
+              <p>เลือกคอร์สที่ต้องการ</p>
+            </div>
+            <div class="step">
+              <span>2</span>
+              <p>กรอกข้อมูลและยืนยันการสมัคร</p>
+            </div>
+            <div class="step">
+              <span>3</span>
+              <p>รับตารางเรียนและเริ่มเรียนทันที</p>
+            </div>
+            <a class="btn btn-primary" href="#contact">สนใจลงทะเบียน</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt-section" id="member">
+        <div class="container section-grid">
+          <div>
+            <p class="eyebrow">ข้อมูลสมาชิก</p>
+            <h2>บริหารข้อมูลและติดตามสถานะคอร์สในแดชบอร์ดเดียว</h2>
+            <p>สมาชิกสามารถดูข้อมูลส่วนตัว แก้ไขข้อมูล และจัดการตารางเรียนจากหน้าจอเดียวกัน</p>
+          </div>
+          <div class="member-card">
+            <div class="member-row">
+              <strong>ชื่อสมาชิก</strong>
+              <span>นภัสสรณ์ แสงศรี</span>
+            </div>
+            <div class="member-row">
+              <strong>สถานะคอร์ส</strong>
+              <span>กำลังเรียน</span>
+            </div>
+            <div class="member-row">
+              <strong>ตารางเรียน</strong>
+              <span>จัดการแล้ว 3 รายการ</span>
+            </div>
+            <button class="btn btn-secondary">จัดการตารางเรียน</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container contact-wrap">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2>ติดต่อเราได้ทันที</h2>
+            <p>หากมีคำถามหรืออยากขอคำแนะนำ สามารถส่งข้อความถึงเราได้เลย</p>
+          </div>
+          <form class="contact-form" id="contactForm">
+            <input type="text" placeholder="ชื่อของคุณ" required />
+            <input type="email" placeholder="อีเมล" required />
+            <textarea rows="4" placeholder="ข้อความของคุณ" required></textarea>
+            <button class="btn btn-primary" type="submit">ส่งข้อความ</button>
+            <p class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© <span id="year"></span> JumpFirst Academy. All rights reserved.</p>
+        <p>Designed for smooth learning experience.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="loginModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <button class="modal-close" data-close-modal="loginModal" aria-label="Close">×</button>
+        <h3 id="loginTitle">เข้าสู่ระบบ</h3>
+        <form class="modal-form">
+          <input type="text" placeholder="Username / Email / เบอร์โทรศัพท์" required />
+          <input type="password" placeholder="รหัสผ่าน" required />
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="registerModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+        <button class="modal-close" data-close-modal="registerModal" aria-label="Close">×</button>
+        <h3 id="registerTitle">สร้างบัญชีใหม่</h3>
+        <form class="modal-form">
+          <input type="text" placeholder="ชื่อ-สกุล" required />
+          <input type="tel" placeholder="เบอร์โทรศัพท์" required />
+          <input type="email" placeholder="Email" required />
+          <input type="text" placeholder="Username" required />
+          <input type="password" placeholder="รหัสผ่าน" required />
+          <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
