@@ -4,6 +4,60 @@ const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 const contactForm = document.getElementById('contactForm');
 const statusMessage = document.querySelector('.form-status');
 const year = document.getElementById('year');
+const themeToggle = document.getElementById('themeToggle');
+const themeToggleLabel = document.querySelector('.theme-switch-label');
+const brandLogo = document.querySelector('.brand-logo');
+const root = document.documentElement;
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+const darkLogoSrc = 'assets/logos/jumpfirst-logo.svg';
+const lightLogoSrc = 'assets/logos/jumpfirst-logo-lightmode.svg';
+
+function updateBrandLogo(theme) {
+  if (!brandLogo) {
+    return;
+  }
+  brandLogo.src = theme === 'light' ? lightLogoSrc : darkLogoSrc;
+}
+
+function applyTheme(theme) {
+  if (theme === 'light') {
+    root.setAttribute('data-theme', 'light');
+  } else {
+    root.removeAttribute('data-theme');
+  }
+  updateBrandLogo(theme);
+}
+
+function updateThemeButton() {
+  if (!themeToggle) {
+    return;
+  }
+  const isLight = root.getAttribute('data-theme') === 'light';
+  themeToggle.setAttribute('data-theme-mode', isLight ? 'light' : 'dark');
+  themeToggle.setAttribute('aria-pressed', String(isLight));
+  themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+  if (themeToggleLabel) {
+    themeToggleLabel.textContent = isLight ? 'Light' : 'Dark';
+  }
+}
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light' || savedTheme === 'dark') {
+  applyTheme(savedTheme);
+} else {
+  applyTheme(systemPrefersDark.matches ? 'dark' : 'light');
+}
+updateThemeButton();
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    const nextTheme = isLight ? 'dark' : 'light';
+    applyTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+    updateThemeButton();
+  });
+}
 
 if (year) {
   year.textContent = new Date().getFullYear();
