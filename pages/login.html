@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | JUMPFIRST</title>
+    <meta name="description" content="เข้าสู่ระบบสมาชิก JUMPFIRST" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body data-page="login">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="../index.html">
+          <img class="brand-logo" src="../assets/logos/jumpfirst-logo.svg" alt="JUMPFIRST logo" />
+          <span class="brand-slogan">
+            <span class="brand-line">JUMP <span class="brand-accent">FIRST</span></span>
+            <span class="brand-line">THINK <span class="brand-accent">LATER</span></span>
+          </span>
+        </a>
+        <div class="header-right">
+          <div class="nav-actions">
+            <button class="theme-switch" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false" data-theme-mode="dark">
+              <span class="theme-switch-track" aria-hidden="true">
+                <span class="theme-switch-thumb"></span>
+              </span>
+              <span class="theme-switch-label">Dark</span>
+            </button>
+            <div class="lang-switch" role="group" aria-label="Language switcher">
+              <button class="lang-option active" id="langTH" type="button" aria-pressed="true">TH</button>
+              <button class="lang-option" id="langEN" type="button" aria-pressed="false">EN</button>
+            </div>
+            <a class="btn btn-secondary" href="register.html">Register</a>
+          </div>
+          <nav class="site-nav" aria-label="Primary navigation">
+            <a href="../index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="member-dashboard.html">Dashboard</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="section">
+        <div class="container section-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Login</p>
+            <h1>ยินดีต้อนรับกลับสู่ JUMPFIRST</h1>
+            <p>เข้าสู่ระบบเพื่อจัดการคอร์ส ดูตารางเรียน และติดตามความคืบหน้าของคุณได้ทันที</p>
+            <ul class="hero-highlights">
+              <li>เข้าถึงแดชบอร์ดสมาชิก</li>
+              <li>อัปเดตตารางเรียนแบบเรียลไทม์</li>
+              <li>ติดตามสถานะคอร์สได้ตลอดเวลา</li>
+            </ul>
+          </div>
+
+          <form class="contact-form reveal auth-form" aria-label="Login form">
+            <h2>เข้าสู่ระบบ</h2>
+            <input type="text" placeholder="Username / Email / เบอร์โทรศัพท์" required />
+            <input type="password" placeholder="รหัสผ่าน" required />
+            <label class="check-row">
+              <input type="checkbox" />
+              <span>จดจำฉันในอุปกรณ์นี้</span>
+            </label>
+            <button class="btn btn-primary" type="submit">Login</button>
+            <p class="helper-links">
+              <a href="register.html">ยังไม่มีบัญชี? สมัครสมาชิก</a>
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© <span id="year"></span> JumpFirst Academy. All rights reserved.</p>
+        <p>Member access designed for speed and security.</p>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script src="../js/content.js"></script>
+    <script src="../js/pages-content.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/animations.js"></script>
+  </body>
+</html>

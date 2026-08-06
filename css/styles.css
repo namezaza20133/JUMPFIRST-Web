@@ -178,11 +178,51 @@ img {
 
 .site-nav a {
   padding: 0.05rem 0.16rem;
+  position: relative;
+  transition: color 0.22s ease, text-decoration-color 0.22s ease;
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
   color: var(--text);
+}
+
+.site-nav a.active,
+.site-nav a[aria-current='page'] {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22rem;
+}
+
+.site-nav a.active::after,
+.site-nav a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.44rem;
+  width: 1.05rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.16), 0 0 10px rgba(239, 96, 18, 0.32);
+  transform: translateX(-50%) scaleX(0.86);
+  transform-origin: center;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  opacity: 0.95;
+  animation: navPillIn 0.24s ease-out;
+}
+
+@keyframes navPillIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.55);
+  }
+  to {
+    opacity: 0.95;
+    transform: translateX(-50%) scaleX(0.86);
+  }
 }
 
 .nav-actions {
@@ -195,6 +235,20 @@ img {
 
 .nav-actions .btn {
   padding: 0.66rem 0.95rem;
+}
+
+.nav-actions a.btn.active,
+.nav-actions a.btn[aria-current='page'] {
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+  transition: transform 0.2s ease, box-shadow 0.22s ease;
+}
+
+.page-main a.btn.active,
+.page-main a.btn[aria-current='page'] {
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+  transition: transform 0.2s ease, box-shadow 0.22s ease;
 }
 
 .btn {
@@ -354,6 +408,10 @@ html[lang='th'] .nav-actions .lang-option {
 
 .hero {
   padding: 5rem 0 4rem;
+}
+
+.page-main {
+  min-height: calc(100vh - 220px);
 }
 
 .hero-grid,
@@ -595,6 +653,71 @@ p {
   gap: 0.9rem;
 }
 
+.auth-form h2 {
+  margin-bottom: 0.2rem;
+}
+
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.check-row input[type='checkbox'] {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.16rem;
+}
+
+.helper-links {
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.helper-links a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0 0 1.8rem;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0.35rem 0 0.2rem;
+}
+
+.dashboard-grid {
+  align-items: start;
+}
+
+.contact-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+}
+
+.contact-points .info-card {
+  padding: 1rem;
+}
+
+.contact-points .info-card h3 {
+  margin-bottom: 0.25rem;
+}
+
+.contact-points .info-card p {
+  margin: 0;
+}
+
 input,
 textarea {
   width: 100%;
@@ -726,6 +849,11 @@ textarea::placeholder {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-metrics,
+  .contact-points {
+    grid-template-columns: 1fr;
+  }
+
   .card-grid {
     grid-template-columns: 1fr;
   }
@@ -750,6 +878,13 @@ textarea::placeholder {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    row-gap: 0.55rem;
+  }
+
+  .site-nav a.active::after,
+  .site-nav a[aria-current='page']::after {
+    bottom: -0.34rem;
+    width: 0.9rem;
   }
 
   .hero {

@@ -1,7 +1,4 @@
 // ---------- DOM References ----------
-const modalButtons = document.querySelectorAll('[data-open-modal]');
-const closeButtons = document.querySelectorAll('[data-close-modal]');
-const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 const contactForm = document.getElementById('contactForm');
 const statusMessage = document.querySelector('.form-status');
 const year = document.getElementById('year');
@@ -12,6 +9,9 @@ const langTHButton = document.getElementById('langTH');
 const langENButton = document.getElementById('langEN');
 const brandLogo = document.querySelector('.brand-logo');
 const heroCard = document.querySelector('.hero-card');
+const siteNavLinks = document.querySelectorAll('.site-nav a');
+const authActionLinks = document.querySelectorAll('.nav-actions a.btn[href]');
+const pageActionLinks = document.querySelectorAll('.page-main a.btn[href], .page-main .helper-links a[href]');
 const root = document.documentElement;
 
 // ---------- Content Store ----------
@@ -22,8 +22,10 @@ const placeholderBindings = contentStore.placeholderBindings || [];
 
 // ---------- Theme / Language State ----------
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-const darkLogoSrc = 'assets/logos/jumpfirst-logo.svg';
-const lightLogoSrc = 'assets/logos/jumpfirst-logo-lightmode.svg';
+const normalizedPath = window.location.pathname.replace(/\\/g, '/').toLowerCase();
+const logoBasePath = normalizedPath.includes('/pages/') ? '../assets/logos/' : 'assets/logos/';
+const darkLogoSrc = `${logoBasePath}jumpfirst-logo.svg`;
+const lightLogoSrc = `${logoBasePath}jumpfirst-logo-lightmode.svg`;
 let currentLanguage = 'th';
 
 function getText(locale, key) {
@@ -108,6 +110,67 @@ function updateBackToTopVisibility() {
   backToTopButton.classList.toggle('visible', window.scrollY > 260);
 }
 
+function markCurrentNavLink() {
+  const currentPath = window.location.pathname.replace(/\\/g, '/').toLowerCase();
+
+  siteNavLinks.forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    if (!href || href.startsWith('#')) {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+      return;
+    }
+
+    const linkPath = new URL(href, window.location.href).pathname.replace(/\\/g, '/').toLowerCase();
+    const isCurrent = linkPath === currentPath;
+    link.classList.toggle('active', isCurrent);
+
+    if (isCurrent) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+
+  authActionLinks.forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    if (!href || href.startsWith('#')) {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+      return;
+    }
+
+    const linkPath = new URL(href, window.location.href).pathname.replace(/\\/g, '/').toLowerCase();
+    const isCurrent = linkPath === currentPath;
+    link.classList.toggle('active', isCurrent);
+
+    if (isCurrent) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+
+  pageActionLinks.forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    if (!href || href.startsWith('#')) {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+      return;
+    }
+
+    const linkPath = new URL(href, window.location.href).pathname.replace(/\\/g, '/').toLowerCase();
+    const isCurrent = linkPath === currentPath;
+    link.classList.toggle('active', isCurrent);
+
+    if (isCurrent) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
+
 function applyLanguage(language) {
   currentLanguage = language === 'en' ? 'en' : 'th';
   root.setAttribute('lang', currentLanguage);
@@ -116,12 +179,12 @@ function applyLanguage(language) {
   applyPlaceholderBindings(currentLanguage);
 
   if (heroCard) {
-    heroCard.setAttribute('aria-label', getText(currentLanguage, 'dashboardPreview'));
+    const ariaKey = heroCard.getAttribute('data-aria-i18n') || 'dashboardPreview';
+    const ariaText = getText(currentLanguage, ariaKey);
+    if (ariaText) {
+      heroCard.setAttribute('aria-label', ariaText);
+    }
   }
-
-  document.querySelectorAll('.modal-close').forEach((closeButton) => {
-    closeButton.setAttribute('aria-label', getText(currentLanguage, 'close'));
-  });
 
   if (backToTopButton) {
     const backToTopText = getText(currentLanguage, 'backToTop');
@@ -131,22 +194,6 @@ function applyLanguage(language) {
 
   updateLanguageButtons();
   updateThemeButton();
-}
-
-function closeModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-}
-
-function openModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-  }
 }
 
 // ---------- App Bootstrap ----------
@@ -160,6 +207,7 @@ if (savedTheme === 'light' || savedTheme === 'dark') {
 const savedLanguage = localStorage.getItem('language');
 const preferredLanguage = navigator.language.toLowerCase().startsWith('th') ? 'th' : 'en';
 applyLanguage(savedLanguage === 'th' || savedLanguage === 'en' ? savedLanguage : preferredLanguage);
+markCurrentNavLink();
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -193,34 +241,6 @@ if (langENButton) {
     }
   });
 }
-
-modalButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const modalId = button.getAttribute('data-open-modal');
-    openModal(modalId);
-  });
-});
-
-closeButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const modalId = button.getAttribute('data-close-modal');
-    closeModal(modalId);
-  });
-});
-
-modalBackdrops.forEach((modal) => {
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeModal(modal.id);
-    }
-  });
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    modalBackdrops.forEach((modal) => closeModal(modal.id));
-  }
-});
 
 if (contactForm) {
   contactForm.addEventListener('submit', (event) => {

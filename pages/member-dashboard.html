@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Dashboard | JUMPFIRST</title>
+    <meta name="description" content="แดชบอร์ดสมาชิก JUMPFIRST" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body data-page="member-dashboard">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="../index.html">
+          <img class="brand-logo" src="../assets/logos/jumpfirst-logo.svg" alt="JUMPFIRST logo" />
+          <span class="brand-slogan">
+            <span class="brand-line">JUMP <span class="brand-accent">FIRST</span></span>
+            <span class="brand-line">THINK <span class="brand-accent">LATER</span></span>
+          </span>
+        </a>
+        <div class="header-right">
+          <div class="nav-actions">
+            <button class="theme-switch" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false" data-theme-mode="dark">
+              <span class="theme-switch-track" aria-hidden="true">
+                <span class="theme-switch-thumb"></span>
+              </span>
+              <span class="theme-switch-label">Dark</span>
+            </button>
+            <div class="lang-switch" role="group" aria-label="Language switcher">
+              <button class="lang-option active" id="langTH" type="button" aria-pressed="true">TH</button>
+              <button class="lang-option" id="langEN" type="button" aria-pressed="false">EN</button>
+            </div>
+            <a class="btn btn-secondary" href="login.html">Login</a>
+            <a class="btn btn-primary" href="register.html">Register</a>
+          </div>
+          <nav class="site-nav" aria-label="Primary navigation">
+            <a href="../index.html">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="member-dashboard.html">Dashboard</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Member Dashboard</p>
+            <h1>ภาพรวมสมาชิกและความคืบหน้าการเรียน</h1>
+          </div>
+
+          <div class="dashboard-metrics">
+            <article class="feature-card reveal">
+              <h3>Active Courses</h3>
+              <p class="metric-value">4 คอร์ส</p>
+              <span>กำลังเรียนในภาคปัจจุบัน</span>
+            </article>
+            <article class="feature-card reveal">
+              <h3>Completion Rate</h3>
+              <p class="metric-value">82%</p>
+              <span>ความคืบหน้าเฉลี่ยของทุกคอร์ส</span>
+            </article>
+            <article class="feature-card reveal">
+              <h3>Upcoming Sessions</h3>
+              <p class="metric-value">3 รายการ</p>
+              <span>คลาสถัดไปใน 7 วันข้างหน้า</span>
+            </article>
+          </div>
+
+          <div class="section-grid dashboard-grid">
+            <div class="member-card reveal">
+              <h2>ข้อมูลสมาชิก</h2>
+              <div class="member-row">
+                <strong>ชื่อสมาชิก</strong>
+                <span>นภัสสรณ์ แสงศรี</span>
+              </div>
+              <div class="member-row">
+                <strong>ระดับสมาชิก</strong>
+                <span>Gold</span>
+              </div>
+              <div class="member-row">
+                <strong>อีเมล</strong>
+                <span>member@example.com</span>
+              </div>
+              <div class="member-row">
+                <strong>สถานะบัญชี</strong>
+                <span>ใช้งานปกติ</span>
+              </div>
+              <button class="btn btn-secondary" type="button">แก้ไขข้อมูลสมาชิก</button>
+            </div>
+
+            <div class="register-panel reveal">
+              <h2>ตารางเรียนใกล้ถึง</h2>
+              <div class="step">
+                <span>09</span>
+                <p>Frontend Workshop - 09:00 น.</p>
+              </div>
+              <div class="step">
+                <span>11</span>
+                <p>UX Review Session - 13:30 น.</p>
+              </div>
+              <div class="step">
+                <span>14</span>
+                <p>Career Coaching - 10:00 น.</p>
+              </div>
+              <a class="btn btn-primary" href="courses.html">ดูคอร์สทั้งหมด</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <p>© <span id="year"></span> JumpFirst Academy. All rights reserved.</p>
+        <p>Track every learning milestone in one place.</p>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script src="../js/content.js"></script>
+    <script src="../js/pages-content.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/animations.js"></script>
+  </body>
+</html>

@@ -16,7 +16,7 @@
     />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body>
+  <body data-page="home">
     <header class="site-header">
       <div class="container nav-wrap">
         <a class="brand" href="#home">
@@ -38,13 +38,14 @@
               <button class="lang-option active" id="langTH" type="button" aria-pressed="true">TH</button>
               <button class="lang-option" id="langEN" type="button" aria-pressed="false">EN</button>
             </div>
-            <button class="btn btn-secondary" data-open-modal="loginModal">Login</button>
-            <button class="btn btn-primary" data-open-modal="registerModal">Register</button>
+            <a class="btn btn-secondary" href="pages/login.html">Login</a>
+            <a class="btn btn-primary" href="pages/register.html">Register</a>
           </div>
           <nav class="site-nav" aria-label="Primary navigation">
             <a href="#about">About</a>
-            <a href="#courses">Courses</a>
-            <a href="#contact">Contact</a>
+            <a href="pages/courses.html">Courses</a>
+            <a href="pages/member-dashboard.html">Dashboard</a>
+            <a href="pages/contact.html">Contact</a>
           </nav>
         </div>
       </div>
@@ -60,8 +61,8 @@
               JumpFirst Academy ออกแบบให้คุณลงทะเบียนเรียน จัดการตารางเรียน และติดตามสถานะคอร์สได้ในพื้นที่เดียว
             </p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#register">ลงทะเบียนเรียน</a>
-              <button class="btn btn-outline" data-open-modal="loginModal">เข้าสู่ระบบ</button>
+              <a class="btn btn-primary" href="pages/register.html">ลงทะเบียนเรียน</a>
+              <a class="btn btn-outline" href="pages/login.html">เข้าสู่ระบบ</a>
             </div>
             <ul class="hero-highlights">
               <li>ระบบสมาชิกปลอดภัย</li>
@@ -69,7 +70,7 @@
               <li>จัดการตารางเรียนได้เอง</li>
             </ul>
           </div>
-          <div class="hero-card" aria-label="Dashboard preview">
+          <div class="hero-card" data-aria-i18n="dashboardPreview" aria-label="Dashboard preview">
             <div class="card-top">
               <span class="dot"></span>
               <span class="dot"></span>
@@ -163,7 +164,7 @@
               <span>3</span>
               <p>รับตารางเรียนและเริ่มเรียนทันที</p>
             </div>
-            <a class="btn btn-primary" href="#contact">สนใจลงทะเบียน</a>
+            <a class="btn btn-primary" href="pages/register.html">สนใจลงทะเบียน</a>
           </div>
         </div>
       </section>
@@ -188,7 +189,7 @@
               <strong>ตารางเรียน</strong>
               <span>จัดการแล้ว 3 รายการ</span>
             </div>
-            <button class="btn btn-secondary">จัดการตารางเรียน</button>
+            <a class="btn btn-secondary" href="pages/member-dashboard.html">จัดการตารางเรียน</a>
           </div>
         </div>
       </section>
@@ -217,33 +218,6 @@
         <p>Designed for smooth learning experience.</p>
       </div>
     </footer>
-
-    <div class="modal-backdrop" id="loginModal" aria-hidden="true">
-      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-        <button class="modal-close" data-close-modal="loginModal" aria-label="Close">×</button>
-        <h3 id="loginTitle">เข้าสู่ระบบ</h3>
-        <form class="modal-form">
-          <input type="text" placeholder="Username / Email / เบอร์โทรศัพท์" required />
-          <input type="password" placeholder="รหัสผ่าน" required />
-          <button class="btn btn-primary" type="submit">Login</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="modal-backdrop" id="registerModal" aria-hidden="true">
-      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
-        <button class="modal-close" data-close-modal="registerModal" aria-label="Close">×</button>
-        <h3 id="registerTitle">สร้างบัญชีใหม่</h3>
-        <form class="modal-form">
-          <input type="text" placeholder="ชื่อ-สกุล" required />
-          <input type="tel" placeholder="เบอร์โทรศัพท์" required />
-          <input type="email" placeholder="Email" required />
-          <input type="text" placeholder="Username" required />
-          <input type="password" placeholder="รหัสผ่าน" required />
-          <button class="btn btn-primary" type="submit">Register</button>
-        </form>
-      </div>
-    </div>
 
     <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
