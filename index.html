@@ -26,22 +26,26 @@
             <span class="brand-line">THINK <span class="brand-accent">LATER</span></span>
           </span>
         </a>
-        <nav class="site-nav" aria-label="Primary navigation">
-          <a href="#about">About</a>
-          <a href="#courses">Courses</a>
-          <a href="#register">Register</a>
-          <a href="#member">Members</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <div class="nav-actions">
-          <button class="theme-switch" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false" data-theme-mode="dark">
-            <span class="theme-switch-track" aria-hidden="true">
-              <span class="theme-switch-thumb"></span>
-            </span>
-            <span class="theme-switch-label">Dark</span>
-          </button>
-          <button class="btn btn-secondary" data-open-modal="loginModal">Login</button>
-          <button class="btn btn-primary" data-open-modal="registerModal">Register</button>
+        <div class="header-right">
+          <div class="nav-actions">
+            <button class="theme-switch" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false" data-theme-mode="dark">
+              <span class="theme-switch-track" aria-hidden="true">
+                <span class="theme-switch-thumb"></span>
+              </span>
+              <span class="theme-switch-label">Dark</span>
+            </button>
+            <div class="lang-switch" role="group" aria-label="Language switcher">
+              <button class="lang-option active" id="langTH" type="button" aria-pressed="true">TH</button>
+              <button class="lang-option" id="langEN" type="button" aria-pressed="false">EN</button>
+            </div>
+            <button class="btn btn-secondary" data-open-modal="loginModal">Login</button>
+            <button class="btn btn-primary" data-open-modal="registerModal">Register</button>
+          </div>
+          <nav class="site-nav" aria-label="Primary navigation">
+            <a href="#about">About</a>
+            <a href="#courses">Courses</a>
+            <a href="#contact">Contact</a>
+          </nav>
         </div>
       </div>
     </header>
@@ -240,6 +244,8 @@
         </form>
       </div>
     </div>
+
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
 
     <script src="js/app.js"></script>
     <script src="js/animations.js"></script>
