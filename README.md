@@ -20,10 +20,13 @@ Key capabilities already moved into the framework app:
 - `legacy-static/`: archived pre-framework implementation kept for reference during migration cleanup
 
 This folder contains the old static HTML/CSS/JS version that existed before the framework migration.
+Do not use it for ongoing feature development unless you are intentionally checking legacy behavior.
 
 ## Working Directory
 
 Use `next-app/` for active development.
+
+The old static workflow, including any local static-server setup such as Five Server, is no longer the primary development path.
 
 ~~~bash
 cd next-app
