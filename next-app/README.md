@@ -143,7 +143,7 @@ npm run test:coverage
 
 GitHub Actions workflow file:
 
-- .github/workflows/ci.yml
+- ../.github/workflows/ci.yml
 
 Pipeline order:
 
