@@ -1,0 +1,15 @@
+export const register = {
+  eyebrow: "สมัครสมาชิก",
+  title: "เริ่มต้นเส้นทางการเรียนรู้ของคุณ",
+  desc: "สร้างบัญชีใหม่เพื่อปลดล็อกคอร์สเรียน จัดการโปรไฟล์ และติดตามพัฒนาการได้ในที่เดียว",
+  formTitle: "สมัครสมาชิก",
+  fullNamePlaceholder: "ชื่อ-สกุล",
+  phonePlaceholder: "เบอร์โทรศัพท์",
+  emailPlaceholder: "อีเมล",
+  usernamePlaceholder: "ชื่อผู้ใช้",
+  passwordPlaceholder: "รหัสผ่าน",
+  submit: "สร้างบัญชี",
+  submitting: "กำลังสร้างบัญชี...",
+  submitSuccess: "สร้างบัญชีสำเร็จ",
+  submitError: "ไม่สามารถสร้างบัญชีได้ กรุณาลองใหม่",
+} as const;

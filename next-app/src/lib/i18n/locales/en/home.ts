@@ -1,0 +1,15 @@
+export const home = {
+  eyebrow: "Course platform for every learning step",
+  title: "Learn with ease through a complete member experience",
+  desc: "JumpFirst Academy lets you register courses, manage schedules, and track learning progress in one place.",
+  ctaRegister: "Join a Course",
+  ctaLogin: "Sign In",
+  highlight1: "Secure member system",
+  highlight2: "Simple enrollment flow",
+  highlight3: "Self-managed schedules",
+  cardAria: "Dashboard preview",
+  cardTitle: "Dashboard Overview",
+  statCourses: "Courses joined",
+  statSchedule: "New schedules",
+  statSuccess: "Success rate",
+} as const;

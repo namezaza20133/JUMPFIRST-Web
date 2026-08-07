@@ -1,0 +1,17 @@
+export const courses = {
+  eyebrow: "Courses",
+  title: "Programs crafted for your growth",
+  desc: "Choose the learning path that fits your goals, from web development and design to career-ready skills.",
+  card1Title: "Frontend Essentials",
+  card2Title: "React & Component Design",
+  card3Title: "UX/UI Product Design",
+  card1Desc: "Build strong HTML, CSS, and JavaScript fundamentals with hands-on workshops.",
+  card2Desc: "Design reusable UI systems and connect data flows with confidence.",
+  card3Desc: "Learn research, wireframing, prototyping, and user testing methods.",
+  loading: "Loading courses...",
+  loadError: "Unable to load courses right now. Please try again.",
+  retry: "Try again",
+  duration12w: "12 weeks",
+  duration10w: "10 weeks",
+  duration8w: "8 weeks",
+} as const;

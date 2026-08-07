@@ -1,0 +1,17 @@
+export const member = {
+  eyebrow: "Member Dashboard",
+  title: "Member overview and learning progress",
+  desc: "Track active courses, progress, and upcoming sessions from a single dashboard.",
+  metric1Title: "Active Courses",
+  metric1Value: "4 courses",
+  metric1Desc: "Currently enrolled this term",
+  metric2Title: "Completion Rate",
+  metric2Value: "82%",
+  metric2Desc: "Average progress across all courses",
+  metric3Title: "Upcoming Sessions",
+  metric3Value: "3 items",
+  metric3Desc: "Scheduled in the next 7 days",
+  loading: "Loading dashboard...",
+  loadError: "Unable to load dashboard right now. Please try again.",
+  retry: "Try again",
+} as const;

@@ -1,0 +1,17 @@
+export const courses = {
+  eyebrow: "คอร์สเรียน",
+  title: "รวมคอร์สเรียนที่ออกแบบเพื่อการเติบโต",
+  desc: "เลือกคอร์สที่เหมาะกับเป้าหมายของคุณ ทั้งสายพัฒนาเว็บไซต์ การออกแบบ และทักษะพร้อมทำงาน",
+  card1Title: "พื้นฐาน Frontend",
+  card2Title: "React และ Component Design",
+  card3Title: "ออกแบบผลิตภัณฑ์ UX/UI",
+  card1Desc: "ปูพื้นฐาน HTML, CSS, JavaScript พร้อมเวิร์กช็อปสร้างหน้าเว็บจริง",
+  card2Desc: "ออกแบบ UI ที่นำกลับมาใช้ซ้ำได้และเชื่อมต่อข้อมูลอย่างเป็นระบบ",
+  card3Desc: "เรียนรู้ Research, Wireframe, Prototype และการทดสอบกับผู้ใช้จริง",
+  loading: "กำลังโหลดคอร์สเรียน...",
+  loadError: "ไม่สามารถโหลดข้อมูลคอร์สได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง",
+  retry: "ลองใหม่",
+  duration12w: "12 สัปดาห์",
+  duration10w: "10 สัปดาห์",
+  duration8w: "8 สัปดาห์",
+} as const;

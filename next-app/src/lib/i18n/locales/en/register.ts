@@ -1,0 +1,15 @@
+export const register = {
+  eyebrow: "Register",
+  title: "Start your learning journey today",
+  desc: "Create a new account to unlock courses, manage your profile, and track progress in one place.",
+  formTitle: "Create Account",
+  fullNamePlaceholder: "Full name",
+  phonePlaceholder: "Phone number",
+  emailPlaceholder: "Email",
+  usernamePlaceholder: "Username",
+  passwordPlaceholder: "Password",
+  submit: "Create Account",
+  submitting: "Creating account...",
+  submitSuccess: "Account created successfully.",
+  submitError: "Unable to create account. Please try again.",
+} as const;
