@@ -1,4 +1,4 @@
 export const footer = {
   rights: "JumpFirst Academy. All rights reserved.",
-  tagline: "Designed for smooth learning experience.",
+  tagline: "A learning platform designed for continuous growth.",
 } as const;

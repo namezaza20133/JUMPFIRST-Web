@@ -1,7 +1,7 @@
 export const contact = {
   eyebrow: "Contact",
-  title: "Our team is ready to help",
-  desc: "If you need course details or guidance on your learning path, contact us anytime.",
+  title: "Our team is ready to plan your learning path",
+  desc: "Need more course details or personalized upskilling guidance? Reach out and we will help you get started.",
   formAria: "Contact form",
   namePlaceholder: "Your name",
   emailPlaceholder: "Your email",

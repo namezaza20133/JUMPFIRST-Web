@@ -1,7 +1,7 @@
 export const login = {
   eyebrow: "เข้าสู่ระบบ",
-  title: "ยินดีต้อนรับกลับสู่ JUMPFIRST",
-  desc: "เข้าสู่ระบบเพื่อจัดการคอร์ส ดูตารางเรียน และติดตามความคืบหน้าของคุณได้ทันที",
+  title: "ยินดีต้อนรับกลับสู่ JumpFirst Academy",
+  desc: "เข้าสู่ระบบเพื่อดูแดชบอร์ดส่วนตัว จัดการคอร์ส และติดตามความคืบหน้าการเรียนของคุณ",
   formTitle: "เข้าสู่ระบบ",
   identifierPlaceholder: "Username / Email / เบอร์โทรศัพท์",
   passwordPlaceholder: "รหัสผ่าน",

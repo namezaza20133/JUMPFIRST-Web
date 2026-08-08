@@ -1,7 +1,7 @@
 export const login = {
   eyebrow: "Login",
-  title: "Welcome back to JUMPFIRST",
-  desc: "Sign in to manage courses, check schedules, and track your progress instantly.",
+  title: "Welcome back to JumpFirst Academy",
+  desc: "Sign in to access your dashboard, manage courses, and monitor learning progress.",
   formTitle: "Login",
   identifierPlaceholder: "Username / Email / Phone number",
   passwordPlaceholder: "Password",

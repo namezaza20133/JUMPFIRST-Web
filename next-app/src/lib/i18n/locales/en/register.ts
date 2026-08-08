@@ -1,7 +1,7 @@
 export const register = {
   eyebrow: "Register",
-  title: "Start your learning journey today",
-  desc: "Create a new account to unlock courses, manage your profile, and track progress in one place.",
+  title: "Start your upskilling journey today",
+  desc: "Create your account to unlock courses, manage your profile, and track growth from one dashboard.",
   formTitle: "Create Account",
   fullNamePlaceholder: "Full name",
   phonePlaceholder: "Phone number",
