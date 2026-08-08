@@ -14,14 +14,24 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="container nav-wrap">
         <Link className="brand" href="/">
-          <Image
-            className="brand-logo"
-            src="/assets/logos/jumpfirst-logo.svg"
-            alt="JUMPFIRST logo"
-            width={160}
-            height={160}
-            priority
-          />
+          <span className="brand-logo-stack" aria-hidden="true">
+            <Image
+              className="brand-logo brand-logo-dark"
+              src="/assets/logos/jumpfirst-logo.svg"
+              alt=""
+              width={160}
+              height={160}
+              priority
+            />
+            <Image
+              className="brand-logo brand-logo-light"
+              src="/assets/logos/jumpfirst-logo-lightmode.svg"
+              alt=""
+              width={160}
+              height={160}
+              priority
+            />
+          </span>
           <span className="brand-slogan">
             <span className="brand-line">
               JUMP <span className="brand-accent">FIRST</span>
