@@ -226,6 +226,18 @@ img {
   flex-wrap: wrap;
 }
 
+.auth-user-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
 .btn {
   border: 0;
   cursor: pointer;
@@ -421,7 +433,8 @@ h1 {
 .hero-card,
 .feature-card,
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 1.25rem;
@@ -433,14 +446,16 @@ h1 {
 .hero-card,
 .feature-card,
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   padding: 1.4rem;
 }
 
 .hero-card::before,
 .feature-card::before,
 .contact-form::before,
-.auth-form::before {
+.auth-form::before,
+.auth-shell::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -453,7 +468,8 @@ h1 {
 .hero-card:hover::before,
 .feature-card:hover::before,
 .contact-form:hover::before,
-.auth-form:hover::before {
+.auth-form:hover::before,
+.auth-shell:hover::before {
   transform: translateX(100%);
 }
 
@@ -538,14 +554,141 @@ textarea {
 }
 
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   display: grid;
   gap: 0.9rem;
+}
+
+.auth-center-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.login-auth-card,
+.recovery-card {
+  width: min(540px, 100%);
+}
+
+.login-card-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.8vw, 2rem);
+  line-height: 1.15;
+}
+
+.login-partition {
+  display: grid;
+  gap: 0.8rem;
+  padding-top: 0.25rem;
+}
+
+.login-partition + .login-partition {
+  margin-top: 0.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.partition-title {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.alt-login-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.auth-main-btn,
+.auth-alt-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.auth-alt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--btn-outline-border);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.social-icon svg {
+  width: 0.72rem;
+  height: 0.72rem;
+  display: block;
+}
+
+.auth-inline-link {
+  color: var(--primary);
+  font-weight: 600;
+  width: fit-content;
+}
+
+.auth-inline-link:hover,
+.auth-inline-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.recovery-description {
+  margin: 0;
+  color: var(--muted);
 }
 
 .form-field {
   display: grid;
   gap: 0.42rem;
+}
+
+.input-with-action {
+  position: relative;
+}
+
+.input-with-action input {
+  padding-right: 3.1rem;
+}
+
+.input-action-btn {
+  position: absolute;
+  right: 0.45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 0.55rem;
+}
+
+.input-action-btn svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.input-action-btn:hover,
+.input-action-btn:focus-visible {
+  color: var(--text);
+  background: var(--btn-secondary-bg);
 }
 
 input[aria-invalid="true"],
@@ -652,7 +795,8 @@ button:disabled {
   .hero-card::before,
   .feature-card::before,
   .contact-form::before,
-  .auth-form::before {
+  .auth-form::before,
+  .auth-shell::before {
     transition: none;
     animation: none;
     transform: none;
@@ -701,5 +845,9 @@ button:disabled {
 
   .hero {
     padding-top: 3rem;
+  }
+
+  .alt-login-grid {
+    grid-template-columns: 1fr;
   }
 }

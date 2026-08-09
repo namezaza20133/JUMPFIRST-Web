@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type FormFieldProps = {
   name: string;
   type?: "text" | "email" | "password" | "tel";
@@ -5,6 +7,7 @@ type FormFieldProps = {
   required?: boolean;
   disabled?: boolean;
   errorMessage?: string;
+  endAction?: ReactNode;
 };
 
 export function FormField({
@@ -14,20 +17,24 @@ export function FormField({
   required = false,
   disabled = false,
   errorMessage,
+  endAction,
 }: FormFieldProps) {
   const errorId = `${name}-error`;
 
   return (
     <div className="form-field">
-      <input
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        required={required}
-        disabled={disabled}
-        aria-invalid={errorMessage ? "true" : "false"}
-        aria-describedby={errorMessage ? errorId : undefined}
-      />
+      <div className={endAction ? "input-with-action" : undefined}>
+        <input
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          required={required}
+          disabled={disabled}
+          aria-invalid={errorMessage ? "true" : "false"}
+          aria-describedby={errorMessage ? errorId : undefined}
+        />
+        {endAction}
+      </div>
       {errorMessage ? (
         <p id={errorId} className="field-error" role="alert">
           {errorMessage}

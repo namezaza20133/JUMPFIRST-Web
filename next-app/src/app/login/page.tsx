@@ -1,8 +1,13 @@
+import { Suspense } from "react";
 import { LoginPageView } from "@/components/pages/LoginPageView";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = createPageMetadata("login.title", "login.desc");
 
 export default function LoginPage() {
-  return <LoginPageView />;
+  return (
+    <Suspense fallback={null}>
+      <LoginPageView />
+    </Suspense>
+  );
 }

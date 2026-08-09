@@ -2,7 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   validateContactPayload,
   validateLoginPayload,
+  validateRecoveryPayload,
+  validateResetPasswordPayload,
   validateRegisterPayload,
+  validateSocialLoginPayload,
 } from "./forms";
 
 describe("validateLoginPayload", () => {
@@ -18,15 +21,13 @@ describe("validateLoginPayload", () => {
     });
   });
 
-  it("returns password length error for short password", () => {
+  it("does not enforce minimum length on login password", () => {
     expect(
       validateLoginPayload({
         identifier: "user@example.com",
         password: "12345",
       })
-    ).toEqual({
-      password: "common.validationFields.password.min6",
-    });
+    ).toBeUndefined();
   });
 
   it("returns undefined for valid payload", () => {
@@ -34,6 +35,133 @@ describe("validateLoginPayload", () => {
       validateLoginPayload({
         identifier: "user@example.com",
         password: "123456",
+      })
+    ).toBeUndefined();
+  });
+
+  it("returns identifier format error for invalid login id", () => {
+    expect(
+      validateLoginPayload({
+        identifier: "not-valid-id",
+        password: "123456",
+      })
+    ).toEqual({
+      identifier: "common.validationFields.identifier.format",
+    });
+  });
+});
+
+describe("validateRecoveryPayload", () => {
+  it("returns required error for empty identifier", () => {
+    expect(
+      validateRecoveryPayload({
+        identifier: "",
+      })
+    ).toEqual({
+      identifier: "common.validationFields.identifier.required",
+    });
+  });
+
+  it("returns format error for invalid identifier", () => {
+    expect(
+      validateRecoveryPayload({
+        identifier: "invalid",
+      })
+    ).toEqual({
+      identifier: "common.validationFields.identifier.format",
+    });
+  });
+
+  it("returns undefined for valid email or phone identifier", () => {
+    expect(
+      validateRecoveryPayload({
+        identifier: "user@example.com",
+      })
+    ).toBeUndefined();
+
+    expect(
+      validateRecoveryPayload({
+        identifier: "+66 8123 4567",
+      })
+    ).toBeUndefined();
+  });
+});
+
+describe("validateSocialLoginPayload", () => {
+  it("returns required error for missing provider", () => {
+    expect(
+      validateSocialLoginPayload({
+        provider: "" as "google",
+      })
+    ).toEqual({
+      provider: "common.validationFields.provider.required",
+    });
+  });
+
+  it("returns unsupported error for invalid provider", () => {
+    expect(
+      validateSocialLoginPayload({
+        provider: "line-messaging" as "google",
+      })
+    ).toEqual({
+      provider: "common.validationFields.provider.unsupported",
+    });
+  });
+
+  it("returns undefined for supported provider", () => {
+    expect(
+      validateSocialLoginPayload({
+        provider: "google",
+      })
+    ).toBeUndefined();
+  });
+});
+
+describe("validateResetPasswordPayload", () => {
+  it("returns required errors for empty values", () => {
+    expect(
+      validateResetPasswordPayload({
+        token: "",
+        otpCode: "",
+        password: "",
+      })
+    ).toEqual({
+      token: "common.validationFields.token.required",
+      otpCode: "common.validationFields.otpCode.required",
+      password: "common.validationFields.password.required",
+    });
+  });
+
+  it("returns min-length error for short password", () => {
+    expect(
+      validateResetPasswordPayload({
+        token: "token-value",
+        otpCode: "123456",
+        password: "short",
+      })
+    ).toEqual({
+      password: "common.validationFields.password.min8",
+    });
+  });
+
+  it("returns format error for invalid otp", () => {
+    expect(
+      validateResetPasswordPayload({
+        token: "token-value",
+        otpCode: "12a4",
+        password: "newpassword123",
+      })
+    ).toEqual({
+      otpCode: "common.validationFields.otpCode.format",
+    });
+  });
+
+  it("returns undefined for valid reset payload", () => {
+    expect(
+      validateResetPasswordPayload({
+        token: "token-value",
+        otpCode: "123456",
+        password: "newpassword123",
       })
     ).toBeUndefined();
   });

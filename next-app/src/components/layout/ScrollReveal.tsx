@@ -10,8 +10,6 @@ const REVEAL_SELECTOR = [
   ".info-card",
   ".register-panel",
   ".member-card",
-  ".contact-form",
-  ".auth-form",
   ".page-intro",
   ".section-heading",
   ".section-status",

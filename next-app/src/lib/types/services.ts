@@ -1,6 +1,7 @@
 export type SubmitResult = {
   success: boolean;
   message?: string;
+  redirectUrl?: string;
 };
 
 export type ApiErrorCode = "network" | "validation" | "not-found" | "server" | "unknown";
@@ -21,8 +22,35 @@ export type ApiResponse<T> =
       error: ApiErrorPayload;
     };
 
+export type AuthSessionData = {
+  authenticated: boolean;
+  user?: {
+    fullName: string;
+    username: string;
+    email: string;
+    phone: string;
+    provider: "password" | "google" | "facebook" | "apple" | "line";
+  };
+};
+
 export type LoginRequest = {
   identifier: string;
+  password: string;
+};
+
+export type SocialProvider = "google" | "facebook" | "apple" | "line";
+
+export type SocialLoginRequest = {
+  provider: SocialProvider;
+};
+
+export type RecoveryRequest = {
+  identifier: string;
+};
+
+export type ResetPasswordRequest = {
+  token: string;
+  otpCode: string;
   password: string;
 };
 

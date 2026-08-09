@@ -18,6 +18,44 @@ export function createMockAdapters(): ServiceAdapters {
         return { success: true, message: "Login successful" };
       },
 
+      logout: async () => {
+        await mockDelay(120);
+        return { success: true, message: "Logged out successfully" };
+      },
+
+      socialLogin: async (payload) => {
+        await mockDelay(260);
+
+        if (!["google", "facebook", "apple", "line"].includes(payload.provider)) {
+          return { success: false, message: "Unsupported social provider" };
+        }
+
+        return {
+          success: true,
+          message: `Continuing with ${payload.provider.charAt(0).toUpperCase()}${payload.provider.slice(1)}...`,
+        };
+      },
+
+      recoverPassword: async (payload) => {
+        await mockDelay(300);
+
+        if (!payload.identifier.trim()) {
+          return { success: false, message: "Missing recovery identifier" };
+        }
+
+        return { success: true, message: "Recovery request sent" };
+      },
+
+      resetPassword: async (payload) => {
+        await mockDelay(320);
+
+        if (!payload.token.trim() || !payload.otpCode.trim() || !payload.password.trim()) {
+          return { success: false, message: "Missing reset fields" };
+        }
+
+        return { success: true, message: "Password reset successful" };
+      },
+
       register: async (payload) => {
         await mockDelay(320);
 
