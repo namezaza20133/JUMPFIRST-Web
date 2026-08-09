@@ -46,7 +46,11 @@ function subscribeToThemeChanges(callback: () => void) {
 
 export function ThemeToggle() {
   const { t } = useI18n();
-  const mode = useSyncExternalStore(subscribeToThemeChanges, getThemeMode, () => "dark");
+  const mode = useSyncExternalStore<ThemeMode>(
+    subscribeToThemeChanges,
+    getThemeMode,
+    (): ThemeMode => "dark",
+  );
 
   useEffect(() => {
     applyTheme(mode);
