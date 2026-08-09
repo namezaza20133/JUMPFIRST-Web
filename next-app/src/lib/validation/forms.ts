@@ -1,22 +1,88 @@
-import type { ContactRequest, LoginRequest, RegisterRequest } from "@/lib/types/services";
+import type {
+  ContactRequest,
+  LoginRequest,
+  RecoveryRequest,
+  ResetPasswordRequest,
+  RegisterRequest,
+  SocialLoginRequest,
+} from "@/lib/types/services";
 
 export type ValidationFieldErrors = Record<string, string>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^\+?[0-9\s-]{9,20}$/;
 const USERNAME_PATTERN = /^[a-zA-Z0-9._-]{3,20}$/;
+const SOCIAL_PROVIDERS = new Set(["google", "facebook", "apple"]);
+
+function isEmailOrPhone(value: string): boolean {
+  return EMAIL_PATTERN.test(value) || PHONE_PATTERN.test(value);
+}
 
 export function validateLoginPayload(payload: LoginRequest): ValidationFieldErrors | undefined {
   const fieldErrors: ValidationFieldErrors = {};
+  const identifier = payload.identifier?.trim() ?? "";
 
-  if (!payload.identifier?.trim()) {
+  if (!identifier) {
     fieldErrors.identifier = "common.validationFields.identifier.required";
+  } else if (!isEmailOrPhone(identifier)) {
+    fieldErrors.identifier = "common.validationFields.identifier.format";
   }
 
   if (!payload.password?.trim()) {
     fieldErrors.password = "common.validationFields.password.required";
-  } else if (payload.password.trim().length < 6) {
-    fieldErrors.password = "common.validationFields.password.min6";
+  }
+
+  return Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined;
+}
+
+export function validateRecoveryPayload(
+  payload: RecoveryRequest
+): ValidationFieldErrors | undefined {
+  const fieldErrors: ValidationFieldErrors = {};
+  const identifier = payload.identifier?.trim() ?? "";
+
+  if (!identifier) {
+    fieldErrors.identifier = "common.validationFields.identifier.required";
+  } else if (!isEmailOrPhone(identifier)) {
+    fieldErrors.identifier = "common.validationFields.identifier.format";
+  }
+
+  return Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined;
+}
+
+export function validateSocialLoginPayload(
+  payload: SocialLoginRequest
+): ValidationFieldErrors | undefined {
+  const fieldErrors: ValidationFieldErrors = {};
+
+  if (!payload.provider?.trim()) {
+    fieldErrors.provider = "common.validationFields.provider.required";
+  } else if (!SOCIAL_PROVIDERS.has(payload.provider)) {
+    fieldErrors.provider = "common.validationFields.provider.unsupported";
+  }
+
+  return Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined;
+}
+
+export function validateResetPasswordPayload(
+  payload: ResetPasswordRequest
+): ValidationFieldErrors | undefined {
+  const fieldErrors: ValidationFieldErrors = {};
+
+  if (!payload.token?.trim()) {
+    fieldErrors.token = "common.validationFields.token.required";
+  }
+
+  if (!payload.password?.trim()) {
+    fieldErrors.password = "common.validationFields.password.required";
+  } else if (payload.password.trim().length < 8) {
+    fieldErrors.password = "common.validationFields.password.min8";
+  }
+
+  if (!payload.otpCode?.trim()) {
+    fieldErrors.otpCode = "common.validationFields.otpCode.required";
+  } else if (!/^\d{6}$/.test(payload.otpCode.trim())) {
+    fieldErrors.otpCode = "common.validationFields.otpCode.format";
   }
 
   return Object.keys(fieldErrors).length > 0 ? fieldErrors : undefined;

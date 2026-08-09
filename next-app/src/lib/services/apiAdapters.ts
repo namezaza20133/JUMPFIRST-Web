@@ -66,6 +66,10 @@ export function createApiAdapters(): ServiceAdapters {
   return {
     auth: {
       login: (payload) => requestJson("/api/auth/login", { method: "POST", body: payload }),
+      logout: () => requestJson("/api/auth/logout", { method: "POST" }),
+      socialLogin: (payload) => requestJson("/api/auth/social", { method: "POST", body: payload }),
+      recoverPassword: (payload) => requestJson("/api/auth/recovery", { method: "POST", body: payload }),
+      resetPassword: (payload) => requestJson("/api/auth/reset-password", { method: "POST", body: payload }),
       register: (payload) => requestJson("/api/auth/register", { method: "POST", body: payload }),
     },
 
