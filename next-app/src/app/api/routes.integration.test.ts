@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { POST as loginPost } from "./auth/login/route";
 import { POST as logoutPost } from "./auth/logout/route";
 import { POST as recoveryPost } from "./auth/recovery/route";
@@ -6,10 +6,12 @@ import { POST as resetPasswordPost } from "./auth/reset-password/route";
 import { POST as registerPost } from "./auth/register/route";
 import { GET as sessionGet } from "./auth/session/route";
 import { POST as socialPost } from "./auth/social/route";
+import { GET as socialCallbackGet } from "./auth/social/callback/[provider]/route";
 import { POST as contactPost } from "./contact/route";
 import { GET as coursesGet } from "./courses/route";
 import { GET as memberMetricsGet } from "./member/metrics/route";
 import { createRecoveryToken } from "@/lib/server/recovery";
+import { createSessionToken } from "@/lib/server/session";
 
 function extractCookieValue(setCookieHeader: string | null, cookieName: string): string | undefined {
   if (!setCookieHeader) {
@@ -504,5 +506,230 @@ describe("API route contracts", () => {
     expect(payload.success).toBe(true);
     expect(Array.isArray(payload.data)).toBe(true);
     expect(payload.data.length).toBeGreaterThan(0);
+  });
+
+  it("POST /api/contact returns 200 success envelope for valid payload", async () => {
+    const response = await contactPost(
+      new Request("http://localhost/api/contact", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "Jane Doe",
+          email: "jane@example.com",
+          message: "This is a valid test message.",
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({ success: true, data: { success: true } });
+  });
+
+  it("GET /api/auth/session returns authenticated false with no session cookie", async () => {
+    const response = await sessionGet(
+      new Request("http://localhost/api/auth/session")
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({ success: true, data: { authenticated: false } });
+  });
+
+  it("GET /api/auth/session returns authenticated false with invalid session token", async () => {
+    const response = await sessionGet(
+      new Request("http://localhost/api/auth/session", {
+        headers: { cookie: "jumpfirst_session=invalid-token-value" },
+      })
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({ success: true, data: { authenticated: false } });
+  });
+
+  it("GET /api/auth/session returns authenticated true for social provider session", async () => {
+    const token = await createSessionToken({
+      provider: "google",
+      subject: "google-user-123",
+      email: "google@example.com",
+      name: "Google User",
+    });
+
+    const response = await sessionGet(
+      new Request("http://localhost/api/auth/session", {
+        headers: { cookie: `jumpfirst_session=${token}` },
+      })
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      success: true,
+      data: {
+        authenticated: true,
+        user: { provider: "google", email: "google@example.com" },
+      },
+    });
+  });
+
+  it("POST /api/auth/reset-password returns 422 envelope for invalid payload fields", async () => {
+    const response = await resetPasswordPost(
+      new Request("http://localhost/api/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({ token: "", otpCode: "", password: "" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(422);
+    expect(payload).toMatchObject({ success: false, error: { code: "validation" } });
+  });
+
+  it("POST /api/auth/reset-password returns 404 when user is not found", async () => {
+    const token = await createRecoveryToken("ghost@example.com", "777777");
+
+    const response = await resetPasswordPost(
+      new Request("http://localhost/api/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({ token, otpCode: "777777", password: "newpassword123" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(payload).toMatchObject({ success: false, error: { code: "not-found" } });
+  });
+
+  it("POST /api/auth/recovery returns 200 success for existing user email", async () => {
+    const response = await recoveryPost(
+      new Request("http://localhost/api/auth/recovery", {
+        method: "POST",
+        body: JSON.stringify({ identifier: "namezazav5@gmail.com" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({ success: true, data: { success: true } });
+  });
+
+  describe("GET /api/auth/social/callback/[provider]", () => {
+    afterEach(() => {
+      vi.unstubAllGlobals();
+    });
+
+    it("redirects to login with unsupported_provider error for unknown provider", async () => {
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/unknown"),
+        { params: Promise.resolve({ provider: "unknown" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=unsupported_provider");
+    });
+
+    it("redirects to login with missing_oauth_params error when code is absent", async () => {
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?state=abc"),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=missing_oauth_params");
+    });
+
+    it("redirects to login with missing_oauth_params error when state is absent", async () => {
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=abc"),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=missing_oauth_params");
+    });
+
+    it("redirects to login with invalid_oauth_state error when state does not match cookie", async () => {
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=abc&state=xyz", {
+          headers: { cookie: "jumpfirst_oauth_state=different" },
+        }),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=invalid_oauth_state");
+    });
+
+    it("redirects to login with invalid_oauth_state error when state cookie is missing", async () => {
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=abc&state=xyz"),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=invalid_oauth_state");
+    });
+
+    it("redirects to login with oauth_exchange_failed error on fetch failure", async () => {
+      vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("Network error")));
+
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=abc&state=valid-state", {
+          headers: { cookie: "jumpfirst_oauth_state=valid-state" },
+        }),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=oauth_exchange_failed");
+    });
+
+    it("redirects to login with missing_subject error when profile id is empty", async () => {
+      vi.stubGlobal(
+        "fetch",
+        vi
+          .fn()
+          .mockResolvedValueOnce({ ok: true, json: async () => ({ access_token: "test-token" }) })
+          .mockResolvedValueOnce({ ok: true, json: async () => ({ sub: "", email: "test@example.com", name: "Test" }) })
+      );
+
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=valid-code&state=valid-state", {
+          headers: { cookie: "jumpfirst_oauth_state=valid-state" },
+        }),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("socialError=missing_subject");
+    });
+
+    it("redirects to member-dashboard on successful OAuth exchange", async () => {
+      vi.stubGlobal(
+        "fetch",
+        vi
+          .fn()
+          .mockResolvedValueOnce({ ok: true, json: async () => ({ access_token: "test-access-token" }) })
+          .mockResolvedValueOnce({ ok: true, json: async () => ({ sub: "google-user-123", email: "google@example.com", name: "Google User" }) })
+      );
+
+      const response = await socialCallbackGet(
+        new Request("http://localhost/api/auth/social/callback/google?code=valid-code&state=valid-state", {
+          headers: { cookie: "jumpfirst_oauth_state=valid-state" },
+        }),
+        { params: Promise.resolve({ provider: "google" }) }
+      );
+
+      expect(response.status).toBe(307);
+      expect(response.headers.get("location")).toContain("/member-dashboard");
+    });
   });
 });
