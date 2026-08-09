@@ -26,7 +26,7 @@ export function createMockAdapters(): ServiceAdapters {
       socialLogin: async (payload) => {
         await mockDelay(260);
 
-        if (!["google", "facebook", "apple"].includes(payload.provider)) {
+        if (!["google", "facebook", "apple", "line"].includes(payload.provider)) {
           return { success: false, message: "Unsupported social provider" };
         }
 

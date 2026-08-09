@@ -77,12 +77,77 @@ GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 ~~~
 
-For Facebook OAuth:
+### Google OAuth Quick Setup (Local)
+
+1. Go to Google Cloud Console and create OAuth 2.0 Client ID for a Web application.
+2. Add this Authorized redirect URI:
+	- `http://localhost:3000/api/auth/social/callback/google`
+3. Set local env values:
+
+~~~env
+AUTH_BASE_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+~~~
+
+4. Restart dev server after updating `.env.local`.
+5. On the login page, click the Google button under social login.
+6. After successful consent, user should be redirected to `/member-dashboard` and receive `jumpfirst_session` cookie.
+
+### LINE OAuth Quick Setup (Local)
+
+1. In LINE Developers Console, create a provider and a LINE Login channel.
+2. Add this Callback URL:
+	- `http://localhost:3000/api/auth/social/callback/line`
+3. Set local env values:
+
+~~~env
+AUTH_BASE_URL=http://localhost:3000
+LINE_CLIENT_ID=your_line_channel_id
+LINE_CLIENT_SECRET=your_line_channel_secret
+~~~
+
+4. Restart dev server after updating `.env.local`.
+5. On the login page, click the LINE button under social login.
+6. After successful consent, user should be redirected to `/member-dashboard` and receive `jumpfirst_session` cookie.
+
+Note: Google and LINE login are enabled.
+
+## Future Plan
+
+### Facebook OAuth
+
+Facebook login is intentionally hidden in the UI for now. When the business account and Meta setup are ready, enable it with:
 
 ~~~env
 FACEBOOK_CLIENT_ID=...
 FACEBOOK_CLIENT_SECRET=...
 ~~~
+
+Use this redirect URI in Meta when you are ready to activate it:
+
+- `http://localhost:3000/api/auth/social/callback/facebook`
+
+### Apple OAuth
+
+Apple login is intentionally planned for a future release due account cost requirements.
+
+When ready, use this setup:
+
+1. In Apple Developer, create a Service ID and enable Sign in with Apple.
+2. Add this Return URL:
+   - `http://localhost:3000/api/auth/social/callback/apple`
+3. Set local env values:
+
+~~~env
+AUTH_BASE_URL=http://localhost:3000
+APPLE_CLIENT_ID=your_apple_service_id
+APPLE_CLIENT_SECRET=your_apple_client_secret_jwt
+~~~
+
+4. Restart dev server after updating `.env.local`.
+5. Enable Apple button on login page.
+6. After successful consent, user should be redirected to `/member-dashboard` and receive `jumpfirst_session` cookie.
 
 For Apple OAuth (APPLE_CLIENT_SECRET is the generated JWT client secret):
 

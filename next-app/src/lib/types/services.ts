@@ -29,7 +29,7 @@ export type AuthSessionData = {
     username: string;
     email: string;
     phone: string;
-    provider: "password" | "google" | "facebook" | "apple";
+    provider: "password" | "google" | "facebook" | "apple" | "line";
   };
 };
 
@@ -38,7 +38,7 @@ export type LoginRequest = {
   password: string;
 };
 
-export type SocialProvider = "google" | "facebook" | "apple";
+export type SocialProvider = "google" | "facebook" | "apple" | "line";
 
 export type SocialLoginRequest = {
   provider: SocialProvider;

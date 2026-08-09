@@ -12,7 +12,7 @@ export type ValidationFieldErrors = Record<string, string>;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^\+?[0-9\s-]{9,20}$/;
 const USERNAME_PATTERN = /^[a-zA-Z0-9._-]{3,20}$/;
-const SOCIAL_PROVIDERS = new Set(["google", "facebook", "apple"]);
+const SOCIAL_PROVIDERS = new Set(["google", "facebook", "apple", "line"]);
 
 function isEmailOrPhone(value: string): boolean {
   return EMAIL_PATTERN.test(value) || PHONE_PATTERN.test(value);

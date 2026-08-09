@@ -32,6 +32,14 @@ const PROVIDER_CONFIG: Record<SocialProvider, ProviderConfig> = {
     userInfoUrl: "https://graph.facebook.com/me?fields=id,name,email",
     scopes: ["email", "public_profile"],
   },
+  line: {
+    clientId: process.env.LINE_CLIENT_ID ?? "",
+    clientSecret: process.env.LINE_CLIENT_SECRET ?? "",
+    authorizeUrl: "https://access.line.me/oauth2/v2.1/authorize",
+    tokenUrl: "https://api.line.me/oauth2/v2.1/token",
+    userInfoUrl: "https://api.line.me/oauth2/v2.1/userinfo",
+    scopes: ["openid", "profile", "email"],
+  },
   apple: {
     clientId: process.env.APPLE_CLIENT_ID ?? "",
     clientSecret: process.env.APPLE_CLIENT_SECRET ?? "",
@@ -164,6 +172,14 @@ export async function exchangeCodeForProfile(
       id: String(profile.sub ?? ""),
       email: typeof profile.email === "string" ? profile.email : undefined,
       name: typeof profile.name === "string" ? profile.name : undefined,
+    };
+  }
+
+  if (provider === "line") {
+    return {
+      id: String(profile.sub ?? profile.userId ?? ""),
+      email: typeof profile.email === "string" ? profile.email : undefined,
+      name: typeof profile.name === "string" ? profile.name : typeof profile.displayName === "string" ? profile.displayName : undefined,
     };
   }
 

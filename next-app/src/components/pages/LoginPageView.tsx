@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FormField } from "@/components/forms/FormField";
 import { loginFormSchema } from "@/lib/content/formSchemas";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -16,13 +16,36 @@ import {
 export function LoginPageView() {
   const { t } = useI18n();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string> | undefined>(undefined);
   const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
   const [statusTone, setStatusTone] = useState<"success" | "error" | undefined>(undefined);
 
-  const handleSocialLogin = async (provider: "google" | "facebook" | "apple") => {
+  useEffect(() => {
+    const socialError = searchParams.get("socialError");
+
+    if (!socialError) {
+      return;
+    }
+
+    const socialErrorMessageKey =
+      socialError === "unsupported_provider"
+        ? "login.socialErrorUnsupportedProvider"
+        : socialError === "missing_oauth_params"
+          ? "login.socialErrorMissingParams"
+          : socialError === "invalid_oauth_state"
+            ? "login.socialErrorInvalidState"
+            : socialError === "oauth_exchange_failed"
+              ? "login.socialErrorExchangeFailed"
+              : "login.socialError";
+
+    setStatusTone("error");
+    setStatusMessage(t(socialErrorMessageKey));
+  }, [searchParams, t]);
+
+  const handleSocialLogin = async (provider: "google" | "line") => {
     setIsSubmitting(true);
     setFieldErrors(undefined);
     setStatusMessage(undefined);
@@ -93,7 +116,7 @@ export function LoginPageView() {
       <section className="section">
         <div className="container auth-center-wrap">
           <form
-            className="contact-form auth-form login-auth-card"
+            className="auth-shell login-auth-card"
             aria-label={t("login.formTitle")}
             onSubmit={(event) => {
               event.preventDefault();
@@ -201,34 +224,18 @@ export function LoginPageView() {
                 <button
                   type="button"
                   className="btn btn-outline auth-alt-btn"
-                  onClick={() => void handleSocialLogin("facebook")}
+                  onClick={() => void handleSocialLogin("line")}
                   disabled={isSubmitting}
                 >
                   <span className="social-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
                       <path
                         fill="currentColor"
-                        d="M13.6 22v-8.2h2.76l.41-3.19H13.6V8.57c0-.92.26-1.55 1.58-1.55h1.68V4.16a22.62 22.62 0 0 0-2.45-.12c-2.42 0-4.08 1.48-4.08 4.19v2.38H7.6v3.19h2.73V22h3.27Z"
+                        d="M20.61 10.86c0-4.6-4.61-8.35-10.28-8.35S.05 6.26.05 10.86c0 4.12 3.66 7.57 8.6 8.22.34.07.8.22.92.5.11.26.07.67.03.94 0 0-.12.73-.15.89-.05.26-.23 1.02.9.55 1.13-.48 6.1-3.59 8.32-6.14h-.01c1.53-1.68 2.25-3.39 2.25-4.96ZM7.4 12.86H5.37a.27.27 0 0 1-.27-.27V8.63c0-.15.12-.27.27-.27h.54c.15 0 .27.12.27.27v3.42H7.4c.15 0 .27.12.27.27v.27c0 .15-.12.27-.27.27Zm1.62-.27a.27.27 0 0 1-.27.27h-.54a.27.27 0 0 1-.27-.27V8.63c0-.15.12-.27.27-.27h.54c.15 0 .27.12.27.27v3.96Zm4.4 0a.27.27 0 0 1-.27.27h-.54a.27.27 0 0 1-.22-.12l-2.08-2.84v2.69a.27.27 0 0 1-.27.27h-.54a.27.27 0 0 1-.27-.27V8.63c0-.15.12-.27.27-.27h.54c.09 0 .17.04.22.11l2.08 2.84V8.63c0-.15.12-.27.27-.27h.54c.15 0 .27.12.27.27v3.96Zm3.63-3.42h-2.03v.67h2.03c.15 0 .27.12.27.27v.27c0 .15-.12.27-.27.27h-2.03v.67h2.03c.15 0 .27.12.27.27v.27c0 .15-.12.27-.27.27h-2.84a.27.27 0 0 1-.27-.27V8.63c0-.15.12-.27.27-.27h2.84c.15 0 .27.12.27.27v.27c0 .15-.12.27-.27.27Z"
                       />
                     </svg>
                   </span>
-                  {t("login.socialFacebook")}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline auth-alt-btn"
-                  onClick={() => void handleSocialLogin("apple")}
-                  disabled={isSubmitting}
-                >
-                  <span className="social-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
-                      <path
-                        fill="currentColor"
-                        d="M15.14 3.5c.91 1.1 1.53 2.6 1.37 4.09-1.33.1-2.96-.76-3.92-1.86-.88-1-1.64-2.6-1.44-4.02 1.48-.11 3 .84 3.99 1.79Zm4.45 13.77c-.54 1.25-.8 1.8-1.5 2.93-.98 1.58-2.36 3.55-4.07 3.57-1.52.01-1.91-.99-3.98-.98-2.07.01-2.5 1-4.02.99-1.71-.02-3.02-1.79-4-3.37-2.74-4.44-3.03-9.65-1.34-12.27 1.2-1.86 3.09-2.95 4.87-2.95 1.81 0 2.95 1 4.45 1 1.46 0 2.35-1 4.44-1 .58 0 2.67.16 3.94 2a5.37 5.37 0 0 0-3.19 4.9c.02 2.81 2.48 3.75 2.5 3.76-.02.07-.4 1.37-1.1 2.42Z"
-                      />
-                    </svg>
-                  </span>
-                  {t("login.socialApple")}
+                  {t("login.socialLine")}
                 </button>
               </div>
             </div>

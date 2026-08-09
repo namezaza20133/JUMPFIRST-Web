@@ -101,7 +101,7 @@ describe("validateSocialLoginPayload", () => {
   it("returns unsupported error for invalid provider", () => {
     expect(
       validateSocialLoginPayload({
-        provider: "line" as "google",
+        provider: "line-messaging" as "google",
       })
     ).toEqual({
       provider: "common.validationFields.provider.unsupported",

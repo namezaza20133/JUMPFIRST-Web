@@ -18,20 +18,22 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 function getInitialLanguage(): Language {
-  if (typeof window === "undefined") {
-    return defaultLanguage;
-  }
-
-  const saved = window.localStorage.getItem(languageStorageKey);
-  if (saved === "th" || saved === "en") {
-    return saved;
-  }
-
-  return navigator.language.toLowerCase().startsWith("th") ? "th" : "en";
+  return defaultLanguage;
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem(languageStorageKey);
+    if (saved === "th" || saved === "en") {
+      setLanguage(saved);
+      return;
+    }
+
+    const browserLanguage = navigator.language.toLowerCase().startsWith("th") ? "th" : "en";
+    setLanguage(browserLanguage);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("lang", language);

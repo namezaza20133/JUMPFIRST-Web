@@ -8,7 +8,7 @@ import {
 } from "@/lib/server/session";
 import type { SocialProvider } from "@/lib/types/services";
 
-const SUPPORTED_PROVIDERS = new Set<SocialProvider>(["google", "facebook", "apple"]);
+const SUPPORTED_PROVIDERS = new Set<SocialProvider>(["google", "facebook", "apple", "line"]);
 
 function redirectToLoginWithError(request: Request, error: string): NextResponse {
   const url = new URL("/login", request.url);

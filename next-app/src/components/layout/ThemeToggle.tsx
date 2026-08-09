@@ -17,18 +17,20 @@ function applyTheme(mode: ThemeMode) {
 
 export function ThemeToggle() {
   const { t } = useI18n();
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") {
-      return "dark";
-    }
+  const [mode, setMode] = useState<ThemeMode>("dark");
 
+  useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "light" || saved === "dark") {
-      return saved;
+      setMode(saved);
+      return;
     }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+    const systemPreferredMode: ThemeMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+    setMode(systemPreferredMode);
+  }, []);
 
   useEffect(() => {
     applyTheme(mode);

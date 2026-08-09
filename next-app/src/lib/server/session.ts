@@ -5,7 +5,7 @@ const AUTH_SESSION_COOKIE = "jumpfirst_session";
 const AUTH_SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
 type SessionUser = {
-  provider: "password" | "google" | "facebook" | "apple";
+  provider: "password" | "google" | "facebook" | "apple" | "line";
   subject: string;
   email?: string;
   name?: string;
@@ -99,7 +99,11 @@ export async function verifySessionToken(token: string): Promise<SessionTokenPay
 
     if (
       typeof sub !== "string" ||
-      (provider !== "password" && provider !== "google" && provider !== "facebook" && provider !== "apple")
+      (provider !== "password" &&
+        provider !== "google" &&
+        provider !== "facebook" &&
+        provider !== "apple" &&
+        provider !== "line")
     ) {
       return undefined;
     }

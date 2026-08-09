@@ -433,7 +433,8 @@ h1 {
 .hero-card,
 .feature-card,
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 1.25rem;
@@ -445,14 +446,16 @@ h1 {
 .hero-card,
 .feature-card,
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   padding: 1.4rem;
 }
 
 .hero-card::before,
 .feature-card::before,
 .contact-form::before,
-.auth-form::before {
+.auth-form::before,
+.auth-shell::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -465,7 +468,8 @@ h1 {
 .hero-card:hover::before,
 .feature-card:hover::before,
 .contact-form:hover::before,
-.auth-form:hover::before {
+.auth-form:hover::before,
+.auth-shell:hover::before {
   transform: translateX(100%);
 }
 
@@ -550,7 +554,8 @@ textarea {
 }
 
 .contact-form,
-.auth-form {
+.auth-form,
+.auth-shell {
   display: grid;
   gap: 0.9rem;
 }
@@ -790,7 +795,8 @@ button:disabled {
   .hero-card::before,
   .feature-card::before,
   .contact-form::before,
-  .auth-form::before {
+  .auth-form::before,
+  .auth-shell::before {
     transition: none;
     animation: none;
     transform: none;

@@ -293,7 +293,7 @@ describe("API route contracts", () => {
     const response = await socialPost(
       new Request("http://localhost/api/auth/social", {
         method: "POST",
-        body: JSON.stringify({ provider: "line" }),
+        body: JSON.stringify({ provider: "line-messaging" }),
         headers: { "Content-Type": "application/json" },
       })
     );
@@ -317,6 +317,66 @@ describe("API route contracts", () => {
       new Request("http://localhost/api/auth/social", {
         method: "POST",
         body: JSON.stringify({ provider: "google" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      success: true,
+      data: {
+        success: true,
+      },
+    });
+  });
+
+  it("POST /api/auth/social returns 200 success envelope for facebook provider", async () => {
+    const response = await socialPost(
+      new Request("http://localhost/api/auth/social", {
+        method: "POST",
+        body: JSON.stringify({ provider: "facebook" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      success: true,
+      data: {
+        success: true,
+      },
+    });
+  });
+
+  it("POST /api/auth/social returns 200 success envelope for apple provider", async () => {
+    const response = await socialPost(
+      new Request("http://localhost/api/auth/social", {
+        method: "POST",
+        body: JSON.stringify({ provider: "apple" }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload).toMatchObject({
+      success: true,
+      data: {
+        success: true,
+      },
+    });
+  });
+
+  it("POST /api/auth/social returns 200 success envelope for line provider", async () => {
+    const response = await socialPost(
+      new Request("http://localhost/api/auth/social", {
+        method: "POST",
+        body: JSON.stringify({ provider: "line" }),
         headers: { "Content-Type": "application/json" },
       })
     );
