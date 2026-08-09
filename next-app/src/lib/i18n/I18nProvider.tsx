@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 import {
   defaultLanguage,
   languageStorageKey,
@@ -16,23 +16,45 @@ type I18nContextValue = {
 };
 
 const I18nContext = createContext<I18nContextValue | null>(null);
+const LANGUAGE_CHANGE_EVENT = "jumpfirst-language-change";
 
 function getInitialLanguage(): Language {
   return defaultLanguage;
 }
 
+function getLanguage(): Language {
+  if (typeof window === "undefined") {
+    return defaultLanguage;
+  }
+
+  const saved = window.localStorage.getItem(languageStorageKey);
+  if (saved === "th" || saved === "en") {
+    return saved;
+  }
+
+  return navigator.language.toLowerCase().startsWith("th") ? "th" : "en";
+}
+
+function subscribeToLanguageChanges(callback: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  const handleChange = () => callback();
+  window.addEventListener("storage", handleChange);
+  window.addEventListener(LANGUAGE_CHANGE_EVENT, handleChange);
+
+  return () => {
+    window.removeEventListener("storage", handleChange);
+    window.removeEventListener(LANGUAGE_CHANGE_EVENT, handleChange);
+  };
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem(languageStorageKey);
-    if (saved === "th" || saved === "en") {
-      setLanguage(saved);
-      return;
-    }
-
-    const browserLanguage = navigator.language.toLowerCase().startsWith("th") ? "th" : "en";
-    setLanguage(browserLanguage);
+  const language = useSyncExternalStore(subscribeToLanguageChanges, getLanguage, getInitialLanguage);
+  const setLanguage = useCallback((nextLanguage: Language) => {
+    window.localStorage.setItem(languageStorageKey, nextLanguage);
+    window.dispatchEvent(new Event(LANGUAGE_CHANGE_EVENT));
   }, []);
 
   useEffect(() => {
@@ -46,7 +68,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       setLanguage,
       t: (key: MessageKey) => resolveMessage(language, key),
     }),
-    [language]
+    [language, setLanguage]
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormField } from "@/components/forms/FormField";
 import { loginFormSchema } from "@/lib/content/formSchemas";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -22,28 +22,22 @@ export function LoginPageView() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string> | undefined>(undefined);
   const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
   const [statusTone, setStatusTone] = useState<"success" | "error" | undefined>(undefined);
+  const [initialSocialError] = useState(() => searchParams.get("socialError"));
 
-  useEffect(() => {
-    const socialError = searchParams.get("socialError");
-
-    if (!socialError) {
-      return;
-    }
-
-    const socialErrorMessageKey =
-      socialError === "unsupported_provider"
-        ? "login.socialErrorUnsupportedProvider"
-        : socialError === "missing_oauth_params"
-          ? "login.socialErrorMissingParams"
-          : socialError === "invalid_oauth_state"
-            ? "login.socialErrorInvalidState"
-            : socialError === "oauth_exchange_failed"
-              ? "login.socialErrorExchangeFailed"
-              : "login.socialError";
-
-    setStatusTone("error");
-    setStatusMessage(t(socialErrorMessageKey));
-  }, [searchParams, t]);
+  const socialErrorMessageKey =
+    initialSocialError === "unsupported_provider"
+      ? "login.socialErrorUnsupportedProvider"
+      : initialSocialError === "missing_oauth_params"
+        ? "login.socialErrorMissingParams"
+        : initialSocialError === "invalid_oauth_state"
+          ? "login.socialErrorInvalidState"
+          : initialSocialError === "oauth_exchange_failed"
+            ? "login.socialErrorExchangeFailed"
+            : initialSocialError
+              ? "login.socialError"
+              : undefined;
+  const resolvedStatusTone = statusTone ?? (socialErrorMessageKey ? "error" : undefined);
+  const resolvedStatusMessage = statusMessage ?? (socialErrorMessageKey ? t(socialErrorMessageKey) : undefined);
 
   const handleSocialLogin = async (provider: "google" | "line") => {
     setIsSubmitting(true);
@@ -179,7 +173,9 @@ export function LoginPageView() {
                 />
               ))}
 
-              {statusMessage && statusTone ? <p className={`form-status ${statusTone}`}>{statusMessage}</p> : null}
+              {resolvedStatusMessage && resolvedStatusTone ? (
+                <p className={`form-status ${resolvedStatusTone}`}>{resolvedStatusMessage}</p>
+              ) : null}
 
               <button className="btn btn-primary auth-main-btn" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? t("login.submitting") : t("login.submit")}
